@@ -12,6 +12,10 @@ def create_app():
     jwt.init_app(app)
     CORS(app)
 
+    @app.route('/')
+    def home():
+        return "PyPlay Backend is running 🚀"
+
     from routes.auth import auth_bp
     from routes.lessons import lessons_bp
     from routes.progress import progress_bp
