@@ -1,6 +1,8 @@
 'use client';
 import { useEffect, useState } from 'react';
 
+const BASE_URL = "https://pyplay-backend.onrender.com";
+
 export default function Dashboard() {
   const [user, setUser] = useState(null);
   const [lessons, setLessons] = useState([]);
@@ -18,9 +20,8 @@ export default function Dashboard() {
   }, []);
 
   const fetchLessons = async (token) => {
-    console.log('Token:', token);
     try {
-      const res = await fetch('http://127.0.0.1:5000/api/lessons/', {
+      const res = await fetch(`${BASE_URL}/api/lessons/`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -32,7 +33,7 @@ export default function Dashboard() {
 
   const fetchUser = async (token) => {
     try {
-      const res = await fetch('http://127.0.0.1:5000/api/auth/me', {
+      const res = await fetch(`${BASE_URL}/api/auth/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -44,7 +45,7 @@ export default function Dashboard() {
 
   const fetchProgress = async (token) => {
     try {
-      const res = await fetch('http://127.0.0.1:5000/api/progress/', {
+      const res = await fetch(`${BASE_URL}/api/progress/`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -66,17 +67,15 @@ export default function Dashboard() {
       </div>
 
       <div style={styles.container}>
-        {/* Header */}
         <div style={styles.header}>
           <div style={styles.logoRow}>
             <span style={styles.logoIcon}>{'</>'}</span>
             <span style={styles.logoText}>PyPlay</span>
           </div>
-            <button onClick={() => window.location.href = '/profile'} style={styles.logoutBtn}>Profile</button>
-            <button onClick={logout} style={styles.logoutBtn}>Logout</button>
+          <button onClick={() => window.location.href = '/profile'} style={styles.logoutBtn}>Profile</button>
+          <button onClick={logout} style={styles.logoutBtn}>Logout</button>
         </div>
 
-        {/* Welcome */}
         <div style={styles.welcomeCard}>
           <div>
             <p style={styles.welcomeLabel}>Welcome back 👋</p>
@@ -89,7 +88,6 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* XP Bar */}
         <div style={styles.xpSection}>
           <div style={styles.xpLabelRow}>
             <span style={styles.xpText}>⚡ XP Progress</span>
@@ -100,7 +98,6 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Stats */}
         <div style={styles.statsRow}>
           <div style={styles.statCard}>
             <span style={styles.statNum}>{progress.length}</span>
@@ -116,7 +113,6 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Lessons */}
         <div style={styles.section}>
           <h2 style={styles.sectionTitle}>📚 Python Lessons</h2>
           {lessons.length === 0 ? (
